@@ -89,7 +89,22 @@ client.login(process.env.token).then(() => {
 							);
 							connection.subscribe(player);
 							setTimeout(() => {
-								connection.destroy();
+								try {
+									connection.destroy();
+									console.log(
+										"Bot has just disconnected the voice channel"
+									);
+								} catch (err) {
+									if (
+										err.message.includes(
+											"Cannot destroy VoiceConnection - it has already been destroyed"
+										)
+									)
+										console.log(
+											"Cannot destroy VoiceConnection - it has already been destroyed"
+										);
+									else console.log(err);
+								}
 							}, 80000);
 						}
 					} else {
